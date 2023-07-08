@@ -85,8 +85,13 @@ int custom_bcast(
     int root,
     MPI_Comm comm ) {
 
-    // SEU CODIGO DO EP2 AQUI
-
+    MPI_Status status;
+    int num_procs;
+    MPI_Comm_size(comm, &num_procs);
+    for (int i = 0; i < num_procs;i++){
+        MPI_Send(buffer, count, datatype, i, 1, comm);
+    }
+    MPI_Recv(buffer, count, datatype, root, 1,  comm, &status);
     return MPI_SUCCESS;
 }
 
